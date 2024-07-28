@@ -2,18 +2,23 @@
 html, body {
     font-family: 'Helvetica';
     font-size:16px;
-    height: 100%;
+    height: auto;
     background-color: #fff;
     transition: background 0.2s linear;
 }
-    body.dark {
+    body.dark, .header.dark {
         background-color: black;
     }
         /* #9b59b6 */
 
-        body.dark h1, body.dark .support a  {
+        body.dark h1 p, body.dark {
             color: #fff;
         }
+        body h3 ,h6 {
+            color:#FE3E45
+        }
+
+       
 a, .btn-link {
     color: #006bb7;
 }
@@ -61,3 +66,5 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+
