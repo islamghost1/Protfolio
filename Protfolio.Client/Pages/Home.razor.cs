@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Protfolio.Client.Models;
-using Protfolio.Data;
 
-namespace Protfolio.Components.Pages
+namespace Protfolio.Client.Pages
 {
     public partial class Home : ComponentBase
     {
         //instances
-        GetData Get = new();
+       // GetData Get = new();
         //vars 
         Users? Users;
         string? error;
@@ -15,13 +14,13 @@ namespace Protfolio.Components.Pages
         {
             try
             {
-                Users = await Get.GetUserDetailsAsync(1);
+                //Users = await Get.GetUserDetailsAsync(1);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 error = ex.Message;
             }
-            finally 
+            finally
             {
                 await base.OnInitializedAsync();
 

@@ -1,0 +1,63 @@
+﻿<div class="row">
+    <div class="col-md-6 d-flex flex-column align-items-center">
+        <img class="border-0 rounded-2 mb-3 shadow-lg mb-4 bg-body rounded" style="height:300px;width:300px" src="/src/GreekFace.jpeg" alt="Profile picture">
+        <h1 class="text-center" style="font-weight:bolder">@Users?.name?.ToUpper() @Users?.last_name?.ToUpper()</h1>
+    </div>
+    <div class="col-md-6 mt-5">
+        <div class="p-3">
+            <!--PHONE-->
+            @if (isEditingPhone)
+            {
+                <div class="d-flex">
+                    <InputMask Mask="+9(999) 999-9999" @bind-value="@Users.phone" Class="w-50" />
+                    <button class="btn btn-outline-dark btn-sm ms-3" @onclick="SavePhone"><Icon Name="IconName.Save" /></button>
+                </div>
+            }
+            else
+            {
+                <p><i class="fa-solid fa-phone me-3"></i> @Users?.phone <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditPhone"><Icon Name="IconName.Edit" /></button> </p>
+            }
+            <hr>
+            <!--EMAIL-->
+            @if (isEditingEmail)
+            {
+                <div class="d-flex">
+                    <InputMask Alias="email" @bind-value="@Users.email" Class="w-50" />
+                    <button class="btn btn-outline-dark btn-sm ms-3" @onclick="SaveEmail"><Icon Name="IconName.Save" /></button>
+                </div>
+            }
+            else
+            {
+                <p><i class="fa-solid fa-envelope me-3"></i> @Users?.email <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditEmail"><Icon Name="IconName.Edit" /></button></p>
+            }
+            <hr>
+            <!--ADDRESS-->
+            @if (isEditingAddress)
+            {
+                <div class="d-flex">
+                    <InputMask @bind-value="@Users.address" Class="w-50" />
+                    <button class="btn btn-outline-dark btn-sm ms-3" @onclick="SaveAddress"><Icon Name="IconName.Save" /></button>
+                </div>
+            }
+            else
+            {
+                <p><i class="fa-solid fa-location-dot me-3"></i> @Users?.address <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditAddress"><Icon Name="IconName.Edit" /></button></p>
+            }
+            <hr>
+            <!--SELF DESCRIPTION-->
+            @if (isEditingDescription)
+            {
+                <div class="d-flex">
+                    <textarea  @bind="@Users.description" Class="w-100"></textarea>
+                    <button class="btn btn-outline-dark btn-sm ms-3" @onclick="SaveDescription"><Icon Name="IconName.Save" /></button>
+                </div>
+            }
+            else
+            {
+                <section>
+                    <p>@Users?.description <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditDescription"><Icon Name="IconName.Edit" /></button></p>
+                </section>
+            }
+        </div>
+    </div>
+</div>

@@ -4,6 +4,7 @@ using Protfolio.Components;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Protfolio.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

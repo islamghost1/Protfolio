@@ -14,7 +14,7 @@ namespace Protfolio.Client.Models
         public DateTime timestamp { get; set; }
     }
     [Table("project_steps", Schema = "portfolio")]
-    public class Project_steps
+    public class ProjectSteps
     {
         [Key]
         public int id { get; set; }
@@ -48,7 +48,7 @@ namespace Protfolio.Client.Models
         public double? skill_percentage { get; set; }
     }
     [Table("socials_links", Schema = "portfolio")]
-    public class Socials_links
+    public class SocialsLinks
     {
         [Key]
         public int id { get; set; }
