@@ -3,6 +3,7 @@ using Protfolio.Client.Pages;
 using Protfolio.Components;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using Protfolio.Helpers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,7 +17,9 @@ builder.Services
     })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
+builder.Services.AddSingleton<ConfigurationHelper>();
 var app = builder.Build();
+app.Services.GetRequiredService<ConfigurationHelper>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
