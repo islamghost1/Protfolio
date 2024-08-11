@@ -19,6 +19,8 @@ namespace Protfolio.Client.Models
         [Key]
         public int id { get; set; }
         public string? step { get; set; }
+        [NotMapped]
+        public bool IsEditingStep { get; set; }
     }
 
     [Table("projects", Schema = "portfolio")]
@@ -28,11 +30,21 @@ namespace Protfolio.Client.Models
         public int id { get; set; }
         [ForeignKey("users")]
         public int? user_id { get; set; }
+        public string? work_title { get; set; }
         public string? company_name { get; set; }
         public string? project_name { get; set; }
         public string? project_details { get; set; }
         public DateTime? start_date { get; set; }
         public DateTime? end_date { get; set; }
+        [NotMapped]
+        public List<ProjectSteps>? ProjectSteps { get; set; } = new();
+        [NotMapped]
+        public bool IsEditingWorkTitle { get; set; }
+        [NotMapped]
+        public bool IsEditingCompanyName { get; set; }
+        [NotMapped]
+        public bool IsEditingExperienceDesc { get; set; }
+
     }
     [Table("skills", Schema = "portfolio")]
     public class Skills
@@ -71,5 +83,12 @@ namespace Protfolio.Client.Models
         public string? description { get; set; }
         public DateTime? created_at { get; set; }
         public string? job { get; set; }
+    }
+
+
+    public class Experience
+    {
+        public List<Projects> experience { get; set; } = new();
+        
     }
 }
