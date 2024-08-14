@@ -41,6 +41,8 @@ namespace Portfolio.Data
                                Steps => Steps.id,
                                (project, steps) => new Projects
                                {
+                                   id= project.id,
+                                   user_id= project.user_id,
                                    work_title = project.work_title,
                                    company_name = project.company_name,
                                    project_name = project.project_name,
@@ -50,6 +52,9 @@ namespace Portfolio.Data
                                         {
                                             new ProjectSteps
                                             {
+                                                id = steps.id,
+                                                project_id = steps.project_id,
+                                                user_id = steps.user_id,
                                                 step = steps.step
                                             }
                                         }

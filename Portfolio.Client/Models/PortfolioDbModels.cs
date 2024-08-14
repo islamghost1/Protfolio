@@ -16,8 +16,12 @@ namespace Portfolio.Client.Models
     [Table("project_steps", Schema = "portfolio")]
     public class ProjectSteps
     {
-        [ForeignKey("projects")]
+        [Key]
         public int id { get; set; }
+        [ForeignKey("users")]
+        public int user_id { get; set; }
+        [ForeignKey("projects")]
+        public int project_id { get; set; }
         public string? step { get; set; }
         [NotMapped]
         public bool IsEditingStep { get; set; }
@@ -29,7 +33,7 @@ namespace Portfolio.Client.Models
         [Key]
         public int id { get; set; }
         [ForeignKey("users")]
-        public int? user_id { get; set; }
+        public int user_id { get; set; }
         public string? work_title { get; set; }
         public string? company_name { get; set; }
         public string? project_name { get; set; }

@@ -5,7 +5,7 @@ namespace Portfolio.Data
 {
     public class UpdateData:IUpdateData
     {
-        public Task UpdateWorkTitle(int id , int user_id , string workTitle)
+        public void UpdateWorkTitle(int id , int user_id , string workTitle)
         {
 
             using (var db = new DbContextPortfolio())
@@ -19,7 +19,7 @@ namespace Portfolio.Data
                     {
                         userDetails.work_title = workTitle;
                         db.SaveChanges();
-                        return Task.CompletedTask;
+                        
                     }
                     else
                     {
@@ -35,7 +35,7 @@ namespace Portfolio.Data
 
             }
         }
-        public Task UpdateCompanyName(int id , int user_id , string companyName)
+        public void UpdateCompanyName(int id , int user_id , string companyName)
         {
 
             using (var db = new DbContextPortfolio())
@@ -49,7 +49,7 @@ namespace Portfolio.Data
                     {
                         userDetails.company_name = companyName;
                         db.SaveChanges();
-                        return Task.CompletedTask;
+                        
                     }
                     else
                     {
@@ -65,7 +65,7 @@ namespace Portfolio.Data
 
             }
         }
-        public Task UpdateProjectName(int id, int user_id, string projectName)
+        public void UpdateProjectName(int id, int user_id, string projectName)
         {
 
             using (var db = new DbContextPortfolio())
@@ -79,7 +79,7 @@ namespace Portfolio.Data
                     {
                         userDetails.project_name = projectName;
                         db.SaveChanges();
-                        return Task.CompletedTask;
+                        
                     }
                     else
                     {
@@ -95,7 +95,7 @@ namespace Portfolio.Data
 
             }
         }
-        public Task UpdateProjectDetails(int id, int user_id, string projectDetails)
+        public void UpdateProjectDetails(int id, int user_id, string projectDetails)
         {
 
             using (var db = new DbContextPortfolio())
@@ -109,7 +109,7 @@ namespace Portfolio.Data
                     {
                         userDetails.project_details = projectDetails;
                         db.SaveChanges();
-                        return Task.CompletedTask;
+                        
                     }
                     else
                     {
@@ -125,7 +125,7 @@ namespace Portfolio.Data
 
             }
         }
-        public Task UpdateStartDate(int id, int user_id, DateTime startDate)
+        public void UpdateStartDate(int id, int user_id, DateTime startDate)
         {
 
             using (var db = new DbContextPortfolio())
@@ -139,7 +139,7 @@ namespace Portfolio.Data
                     {
                         userDetails.start_date = startDate;
                         db.SaveChanges();
-                        return Task.CompletedTask;
+                       
                     }
                     else
                     {
@@ -155,7 +155,7 @@ namespace Portfolio.Data
 
             }
         }
-        public Task UpdateEndDate(int id, int user_id, DateTime endDate)
+        public void UpdateEndDate(int id, int user_id, DateTime endDate)
         {
 
             using (var db = new DbContextPortfolio())
@@ -169,7 +169,7 @@ namespace Portfolio.Data
                     {
                         userDetails.end_date = endDate;
                         db.SaveChanges();
-                        return Task.CompletedTask;
+                     
                     }
                     else
                     {
@@ -185,6 +185,35 @@ namespace Portfolio.Data
 
             }
         }
-      
+
+        public void UpdateProjectStep(int id, int user_id, int project_id, string step)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var projectStep = db.Project_steps
+                               .Where(x => x.id == id && x.user_id == user_id &&  x.project_id == project_id )
+                               .FirstOrDefault();
+                    if (projectStep != null)
+                    {
+                        projectStep.step = step;
+                        db.SaveChanges();
+                     
+                    }
+                    else
+                    {
+                        throw new Exception("Project not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+        }
     }
 }

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Components;
 using Portfolio.Client.Models;
 using Portfolio.Data;
-using System.Runtime.CompilerServices;
+using Blazorise.Markdown;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Portfolio.Components.Pages
 {
@@ -11,6 +13,7 @@ namespace Portfolio.Components.Pages
         //instances
         GetData Get = new();
         PutData Put = new();
+        UpdateData Update = new();
         //vars
         private List<Experience> Experiences = new();
 
@@ -19,10 +22,12 @@ namespace Portfolio.Components.Pages
         {
             Experiences = await Get.GetProjects(1);
         }
+        //add || remove 
         private void AddExperience()
         {
             var newProject = new Projects
             {
+                //id = Experiences.Select(x=>x.experience.MaxBy(y=>y.id).id).FirstOrDefault()+1,
                 user_id = 1,
                 work_title = "work title",
                 company_name = "company name",
@@ -33,7 +38,8 @@ namespace Portfolio.Components.Pages
                          {
                              new ProjectSteps {
                               step = "step",
-                               id = 1,
+                               user_id = 1,
+                               project_id = 1
                              }
                          }
             };
@@ -57,11 +63,11 @@ namespace Portfolio.Components.Pages
         {
             experience.ProjectSteps.Remove(step);
         }
-        private void RemoveExperience(Experience experience)
+        private void RemoveExperience(List<Projects> experiences , Projects experience)
         {
-            Experiences.Remove(experience);
+            experiences.Remove(experience);
         }
-
+        //edit && save 
         private void EditWorkTitle(Projects experience)
         {
             experience.IsEditingWorkTitle = !experience.IsEditingWorkTitle;
@@ -69,31 +75,52 @@ namespace Portfolio.Components.Pages
         private void SaveWorkTitle(Projects experience)
         {
             EditWorkTitle(experience);
+            Update.UpdateWorkTitle(experience.id, experience.user_id, experience.work_title);
         }
         private void EditCompanyName(Projects experience)
         {
             experience.IsEditingCompanyName = !experience.IsEditingCompanyName;
         }
-        private void SaveCompanyName(Projects experience)
+        private async void SaveCompanyName(Projects experience)
         {
             EditCompanyName(experience);
+            await MarkDownPropertyAsync(experience, e => e.company_name);
+            Update.UpdateCompanyName(experience.id, experience.user_id, experience.company_name);
+            await InvokeAsync(StateHasChanged);
         }
         private void EditExperienceDesc(Projects experience)
         {
             experience.IsEditingExperienceDesc = !experience.IsEditingExperienceDesc;
         }
-        private void SaveExperienceDesc(Projects experience)
+        private async void SaveExperienceDesc(Projects experience)
         {
             EditExperienceDesc(experience);
+            await MarkDownPropertyAsync(experience, e => e.project_details);
+            Update.UpdateProjectDetails(experience.id, experience.user_id, experience.project_details);
+
+            await InvokeAsync(StateHasChanged);
         }
         private void EditProjectStep(ProjectSteps step)
         {
             step.IsEditingStep = !step.IsEditingStep;
         }
-        private void SaveProjectStep(ProjectSteps step)
+        private async void SaveProjectStep(ProjectSteps step)
         {
             EditProjectStep(step);
+            await MarkDownPropertyAsync(step, e => e.step);
+            Update.UpdateProjectStep(step.id, step.user_id,step.project_id, step.step);
+
+            await InvokeAsync(StateHasChanged);
         }
+        //onChange
+        private async Task MarkDownPropertyAsync<T>(T obj, Expression<Func<T, string>> propertySelector)
+        {
+            var propertyInfo = (PropertyInfo)((MemberExpression)propertySelector.Body).Member;
+            var currentValue = (string)propertyInfo.GetValue(obj);
+            var markdownValue = await Task.Run(() => Markdig.Markdown.ToHtml(currentValue ?? string.Empty));
+            propertyInfo.SetValue(obj, markdownValue);
+        }
+
     }
 
 }

@@ -10,16 +10,16 @@
                     @if (experience.IsEditingWorkTitle)
                     {
                         <div class="d-flex">
-                            <input type="text" class="fw-bold" @bind-value=@experience.work_title>
-                            <InputDate @bind-Value=@experience.start_date />
-                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveWorkTitle(experience))"><Icon Name="IconName.Save" /></button>
+                            <Markdown type="text" class="fw-bold" @bind-value=@experience.work_title />
+                            <InputDate @bind-Value=@experience.start_date style="max-height:32px;" />
+                            <button class="btn btn-outline-dark btn-sm ms-3" style="max-height:32px;" @onclick="@(()=>SaveWorkTitle(experience))"><Icon Name="IconName.Save" /></button>
                         </div>
 
                     }
                     else
                     {
-                        <h5 class="fw-bold">
-                            @experience.work_title (@experience?.start_date.Value.Year)
+                        <h5 class="fw-bold">             
+                            @((MarkupString)experience.work_title) (@experience?.start_date.Value.Year)
                             <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditWorkTitle(experience))">
                                 <Icon Name="IconName.Edit" />
                             </button>
@@ -30,13 +30,14 @@
                     @if (experience.IsEditingCompanyName)
                     {
                         <div class="d-flex">
-                            <input type="text" class="fw-bold" @bind-value=@experience.company_name>
+                            <Markdown type="text" class="fw-bold" @bind-value=@experience.company_name />
                             <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveCompanyName(experience))"><Icon Name="IconName.Save" /></button>
                         </div>
                     }
                     else
                     {
-                        <h6 class="fw-bold">@experience.company_name
+                        <h6 class="fw-bold">
+                            @((MarkupString)experience.company_name)
                             <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditCompanyName(experience))">
                                 <Icon Name="IconName.Edit" />
                             </button>
@@ -47,7 +48,7 @@
                     {
                         <div class="d-flex mb-1">
                             <div class="vr me-1"></div>
-                            <textarea @bind="@experience.project_details" ></textarea>
+                            <Markdown @bind-value="@experience.project_details" />
                             <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveExperienceDesc(experience))" style="max-height:31px"><Icon Name="IconName.Save" /></button>
 
                         </div>
@@ -56,7 +57,7 @@
                     {
                         <div class="d-flex mb-1">
                             <div class="vr me-1"></div>
-                            <p>@experience.project_details</p>
+                            <p>@((MarkupString)experience.project_details)</p>
                             <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditExperienceDesc(experience))" style="max-height:31px">
                                 <Icon Name="IconName.Edit" />
                             </button>
@@ -69,7 +70,7 @@
                         {
                             <div class="d-flex mb-1">
                                 <div class="vr me-1"></div>
-                                <textarea type="text" @bind=@step.step/>
+                                <Markdown type="text" @bind-value=@step.step />
                                 <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveProjectStep(step))" style="max-height:31px"><Icon Name="IconName.Save" /></button>
 
                             </div>
@@ -78,7 +79,7 @@
                         {
                             <div class="d-flex mb-1">
                                 <div class="vr me-1"></div>
-                                <p>@step.step</p>
+                                <p>@((MarkupString)step.step)</p>
                                 <button class="btn btn-outline-dark btn-sm ms-3 me-3" @onclick="@(()=>EditProjectStep(step))" style="max-height:31px">
                                     <Icon Name="IconName.Edit" />
                                 </button>
@@ -86,14 +87,15 @@
 
                             </div>
                         }
-                       
+
                     }
                     <button class="btn btn-outline-warning " @onclick="@(()=>AddStepToExperience(experience))"> <Icon Name="IconName.Add" /> Add another step</button>
-
+                     <!--Delete experience-->
+                    <button class="btn btn-outline-danger btn-sm ms-3" style="max-height:31px" @onclick=@(()=>RemoveExperience(ex.experience,experience))><Icon Name="@("fa-solid fa-delete-left")" /> delete experience</button>
                 }
+               
+
             </div>
-            <!--Delete experience-->
-            <button class="btn btn-outline-danger btn-sm ms-3" style="max-height:31px" @onclick=@(()=>RemoveExperience(ex))><Icon Name="@("fa-solid fa-delete-left")" /></button>
 
 
         </div>
