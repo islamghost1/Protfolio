@@ -38,7 +38,7 @@ namespace Portfolio.Data
                                .Where(x => x.user_id == id)
                                .Join(db.Project_steps,
                                project => project.id,
-                               Steps => Steps.id,
+                               Steps => Steps.project_id,
                                (project, steps) => new Projects
                                {
                                    id= project.id,

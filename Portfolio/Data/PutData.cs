@@ -14,8 +14,11 @@ namespace Portfolio.Data
                     var Projects = db.Projects
                         .Add(project);
                     await db.SaveChangesAsync();
+
                     foreach (var step in project.ProjectSteps)
                     {
+                        step.project_id = project.id;
+                        step.user_id = project.user_id;
                         db.Project_steps.Add(step);
                     }
                     db.SaveChanges();
@@ -30,7 +33,7 @@ namespace Portfolio.Data
             }
 
         }
-        public Task AddStepToProject(int id, int userId, ProjectSteps step)
+        public Task AddStepToProject(ProjectSteps step)
         {
             using (var db = new DbContextPortfolio())
             {

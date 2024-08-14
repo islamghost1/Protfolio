@@ -5,6 +5,7 @@ using Portfolio.Data;
 using Blazorise.Markdown;
 using System.Linq.Expressions;
 using System.Reflection;
+using Mysqlx.Crud;
 
 namespace Portfolio.Components.Pages
 {
@@ -14,6 +15,7 @@ namespace Portfolio.Components.Pages
         GetData Get = new();
         PutData Put = new();
         UpdateData Update = new();
+        DeleteData Delete = new();
         //vars
         private List<Experience> Experiences = new();
 
@@ -37,9 +39,7 @@ namespace Portfolio.Components.Pages
                 ProjectSteps = new List<ProjectSteps>
                          {
                              new ProjectSteps {
-                              step = "step",
-                               user_id = 1,
-                               project_id = 1
+                              step = "step"
                              }
                          }
             };
@@ -54,18 +54,29 @@ namespace Portfolio.Components.Pages
         }
         private void AddStepToExperience(Projects experience)
         {
-            experience.ProjectSteps.Add(new ProjectSteps
+            var step = new ProjectSteps
             {
+                project_id = experience.id,
+                user_id = experience.user_id,
                 step = "Another step"
-            });
+            };
+            experience.ProjectSteps.Add(step);
+            AddStepToProject(step);
         }
         private void RemoveStep(Projects experience, ProjectSteps step)
         {
             experience.ProjectSteps.Remove(step);
+            Delete.DeleteStep(step);
+
         }
         private void RemoveExperience(List<Projects> experiences , Projects experience)
         {
             experiences.Remove(experience);
+            Delete.DeleteExperience(experience);
+        } 
+        private void AddStepToProject(ProjectSteps step)
+        {
+            Put.AddStepToProject(step);
         }
         //edit && save 
         private void EditWorkTitle(Projects experience)
