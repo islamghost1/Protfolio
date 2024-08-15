@@ -35,31 +35,32 @@ namespace Portfolio.Data
                 try
                 {
                     var Projects = db.Projects
-                               .Where(x => x.user_id == id)
-                               .Join(db.Project_steps,
-                               project => project.id,
-                               Steps => Steps.project_id,
-                               (project, steps) => new Projects
-                               {
-                                   id= project.id,
-                                   user_id= project.user_id,
-                                   work_title = project.work_title,
-                                   company_name = project.company_name,
-                                   project_name = project.project_name,
-                                   project_details = project.project_details,
-                                   start_date = project.start_date,
-                                   ProjectSteps = new List<ProjectSteps>
-                                        {
-                                            new ProjectSteps
-                                            {
-                                                id = steps.id,
-                                                project_id = steps.project_id,
-                                                user_id = steps.user_id,
-                                                step = steps.step
-                                            }
-                                        }
-                               }
-                               ).ToList();
+                            .Where(x => x.user_id == id)
+                            .GroupJoin(
+                                db.Project_steps,
+                                project => project.id,
+                                steps => steps.project_id,
+                                (project, steps) => new { project, steps }
+                            )
+                            .Select(x => new Projects
+                            {
+                                id = x.project.id,
+                                user_id = x.project.user_id,
+                                work_title = x.project.work_title,
+                                company_name = x.project.company_name,
+                                project_name = x.project.project_name,
+                                project_details = x.project.project_details,
+                                start_date = x.project.start_date,
+                                ProjectSteps = x.steps.Select(s => new ProjectSteps
+                                {
+                                    id = s.id,
+                                    project_id = s.project_id,
+                                    user_id = s.user_id,
+                                    step = s.step
+                                }).ToList()
+                            })
+                            .ToList();
+
 
                     List<Experience> experiences = new List<Experience>();
                     experiences.Add(new Experience { experience = Projects });

@@ -83,10 +83,13 @@ namespace Portfolio.Components.Pages
         {
             experience.IsEditingWorkTitle = !experience.IsEditingWorkTitle;
         }
-        private void SaveWorkTitle(Projects experience)
+        private async void SaveWorkTitle(Projects experience)
         {
             EditWorkTitle(experience);
+            await MarkDownPropertyAsync(experience, e => e.work_title);
             Update.UpdateWorkTitle(experience.id, experience.user_id, experience.work_title);
+            await InvokeAsync(StateHasChanged);
+
         }
         private void EditCompanyName(Projects experience)
         {

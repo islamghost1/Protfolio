@@ -17,7 +17,7 @@ namespace Portfolio.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(AppSettings.connectionString, ServerVersion.AutoDetect(AppSettings.connectionString));
+            optionsBuilder.UseMySql(AppSettings.connectionString, ServerVersion.AutoDetect(AppSettings.connectionString)).LogTo(Console.WriteLine,LogLevel.Information);
         }
     }
 }
