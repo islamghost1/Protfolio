@@ -6,6 +6,8 @@ using Blazorise.Markdown;
 using System.Linq.Expressions;
 using System.Reflection;
 using Mysqlx.Crud;
+using ReverseMarkdown;
+using System.Text.RegularExpressions;
 
 namespace Portfolio.Components.Pages
 {
@@ -16,9 +18,11 @@ namespace Portfolio.Components.Pages
         PutData Put = new();
         UpdateData Update = new();
         DeleteData Delete = new();
+        Converter converter = new Converter();
+
         //vars
         private List<Experience> Experiences = new();
-
+        Regex HtmlRegex = new Regex("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
 
         protected override async Task OnInitializedAsync()
         {
@@ -82,6 +86,10 @@ namespace Portfolio.Components.Pages
         private void EditWorkTitle(Projects experience)
         {
             experience.IsEditingWorkTitle = !experience.IsEditingWorkTitle;
+            if (IsStrHtml(experience.work_title))
+            {
+                experience.work_title = converter.Convert(experience.work_title);
+            }
         }
         private async void SaveWorkTitle(Projects experience)
         {
@@ -94,6 +102,10 @@ namespace Portfolio.Components.Pages
         private void EditCompanyName(Projects experience)
         {
             experience.IsEditingCompanyName = !experience.IsEditingCompanyName;
+            if (IsStrHtml(experience.company_name))
+            {
+                experience.company_name = converter.Convert(experience.company_name);
+            }
         }
         private async void SaveCompanyName(Projects experience)
         {
@@ -105,6 +117,10 @@ namespace Portfolio.Components.Pages
         private void EditExperienceDesc(Projects experience)
         {
             experience.IsEditingExperienceDesc = !experience.IsEditingExperienceDesc;
+            if (IsStrHtml(experience.project_details))
+            {
+                experience.project_details = converter.Convert(experience.project_details);
+            }
         }
         private async void SaveExperienceDesc(Projects experience)
         {
@@ -117,6 +133,10 @@ namespace Portfolio.Components.Pages
         private void EditProjectStep(ProjectSteps step)
         {
             step.IsEditingStep = !step.IsEditingStep;
+            if (IsStrHtml(step.step))
+            {
+                step.step = converter.Convert(step.step);
+            }
         }
         private async void SaveProjectStep(ProjectSteps step)
         {
@@ -129,10 +149,16 @@ namespace Portfolio.Components.Pages
         //onChange
         private async Task MarkDownPropertyAsync<T>(T obj, Expression<Func<T, string>> propertySelector)
         {
+           
             var propertyInfo = (PropertyInfo)((MemberExpression)propertySelector.Body).Member;
             var currentValue = (string)propertyInfo.GetValue(obj);
             var markdownValue = await Task.Run(() => Markdig.Markdown.ToHtml(currentValue ?? string.Empty));
             propertyInfo.SetValue(obj, markdownValue);
+        }
+
+        bool IsStrHtml(string String)
+        {
+            return HtmlRegex.IsMatch(String);
         }
 
     }
