@@ -56,12 +56,33 @@ namespace Portfolio.Client.Models
         [Key]
         public int id { get; set; }
         [ForeignKey("users")]
-        public int? user_id { get; set; }
+        public int user_id { get; set; }
         [ForeignKey("Projects")]
         public int? project_id { get; set; }
         public string? skill_name { get; set; }
         public string? skill_desc { get; set; }
         public double? skill_percentage { get; set; }
+        public int category { get; set; }
+
+    }
+    public enum SkillCategory
+    {
+        ProgrammingLanguages = 0,
+        WebDevelopment = 1,
+        MobileDevelopment = 2,
+        BackendDevelopment = 3,
+        Databases = 4,
+        VersionControl = 5,
+        DevOps_CICD = 6,
+        CloudPlatforms = 7,
+        SoftwareDevelopmentTools = 8,
+        Testing_QA = 9,
+        MachineLearning_DataScience = 10,
+        APIs_Microservices = 11,
+        SecurityTool = 12,
+        OperatingSystems = 13,
+        ShellScripting_Automation = 14,
+        Networking_Protocols = 15
     }
     [Table("socials_links", Schema = "portfolio")]
     public class SocialsLinks
@@ -93,6 +114,6 @@ namespace Portfolio.Client.Models
     public class Experience
     {
         public List<Projects> experience { get; set; } = new();
-        
+
     }
 }

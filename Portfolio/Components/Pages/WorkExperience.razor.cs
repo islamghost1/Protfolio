@@ -19,7 +19,9 @@ namespace Portfolio.Components.Pages
         UpdateData Update = new();
         DeleteData Delete = new();
         Converter converter = new Converter();
-
+        //params
+        [Parameter]
+        public bool IsPreview { get; set; }
         //vars
         private List<Experience> Experiences = new();
         Regex HtmlRegex = new Regex("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
@@ -73,11 +75,11 @@ namespace Portfolio.Components.Pages
             Delete.DeleteStep(step);
 
         }
-        private void RemoveExperience(List<Projects> experiences , Projects experience)
+        private void RemoveExperience(List<Projects> experiences, Projects experience)
         {
             experiences.Remove(experience);
             Delete.DeleteExperience(experience);
-        } 
+        }
         private void AddStepToProject(ProjectSteps step)
         {
             Put.AddStepToProject(step);
@@ -142,14 +144,14 @@ namespace Portfolio.Components.Pages
         {
             EditProjectStep(step);
             await MarkDownPropertyAsync(step, e => e.step);
-            Update.UpdateProjectStep(step.id, step.user_id,step.project_id, step.step);
+            Update.UpdateProjectStep(step.id, step.user_id, step.project_id, step.step);
 
             await InvokeAsync(StateHasChanged);
         }
         //onChange
         private async Task MarkDownPropertyAsync<T>(T obj, Expression<Func<T, string>> propertySelector)
         {
-           
+
             var propertyInfo = (PropertyInfo)((MemberExpression)propertySelector.Body).Member;
             var currentValue = (string)propertyInfo.GetValue(obj);
             var markdownValue = await Task.Run(() => Markdig.Markdown.ToHtml(currentValue ?? string.Empty));
@@ -161,6 +163,7 @@ namespace Portfolio.Components.Pages
             return HtmlRegex.IsMatch(String);
         }
 
+       
     }
 
 }

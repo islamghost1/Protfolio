@@ -27,6 +27,7 @@ namespace Portfolio.Data
 
             }
         }
+        //work experience
         public Task<List<Experience>> GetProjects(int id)
         {
 
@@ -65,6 +66,27 @@ namespace Portfolio.Data
                     List<Experience> experiences = new List<Experience>();
                     experiences.Add(new Experience { experience = Projects });
                     return Task.FromResult(experiences);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+        }
+        // skills 
+        public Task<List<Skills>> GetSkills(int userId)
+        {
+
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var skills = db.Skills
+                            .Where(x => x.user_id == userId)
+                            .ToList();
+                    return Task.FromResult(skills);
                 }
                 catch (Exception ex)
                 {

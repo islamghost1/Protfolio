@@ -1,15 +1,16 @@
 ﻿@page "/Modify"
 @rendermode InteractiveServer
 <title>Edit CV</title>
+<button class="btn btn-outline-dark btn-sm" @onclick=Preview><Icon Name="IconName.Eye"/></button>
 <div class="container ">
     <!--Image & user name-->
     <ImageNUserName />
     <!--WORK EXPERIENCE-->
     <div class="row mt-3">
-        <WorkExperience />
+        <WorkExperience IsPreview="@IsPreview" />
         <!--SKILLS-->
         <div class="col-md-6">
-            <Skills />
+            <UserSkills  IsPreview="@IsPreview"/>
             <!--EDUCATION-->
             <Education />
         </div>

@@ -1,0 +1,63 @@
+﻿<h3 class="mb-3" style="font-size:20px; font-weight:bolder">SKILLS</h3>
+<div class="">
+    @if (!IsPreview)
+    {
+        @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+        {
+            var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
+            string _category;
+            <ul>
+                <li>
+                    <h4> <strong>@category.ToString()</strong></h4>
+                    <div class="container-fluid">
+                        @foreach (var skill in categorySkills)
+                        {
+                            <div class="w-100">
+                                <input @bind-value=@skill.skill_name class="fw-bold" />
+                                <input @bind-value=@skill.skill_desc />
+                                <Dropdown>
+                                    <DropdownToggle Color="Color.Secondary">
+                                        @skill.category
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+                                        {
+                                            <DropdownItem @onclick=@(()=>{skill.category = (int)Enum.Parse(typeof(Client.Models.SkillCategory), category.ToString()); })>@category</DropdownItem>
+                                        }
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </div>
+                            <button class="btn btn-outline-dark me-2" style="max-height:32px" @onclick=@(()=>UpdateSkill(skill))><Icon Name="IconName.Save" /></button>
+                        }
+                    </div>
+                </li>
+
+            </ul>
+
+        }
+        <button class="btn btn-outline-dark" @onclick=AddSkill> Add a skill <Icon Name="IconName.Add" /></button>
+    }
+    else
+    {
+        @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+        {
+            string _category;
+            var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
+            <ul>
+                <li>
+                    <h4>@category</h4>
+                    <div class="d-flex flex-wrap">
+                        @foreach (var skill in categorySkills)
+                        {
+                            <div class="w-25 text-center">
+                                <i class="@skill.skill_desc  fs-1"></i>
+                                <p class="fw-bold">@skill.skill_name </p>
+
+                            </div>
+                        }
+                    </div>
+                </li>
+            </ul>
+        }
+    }
+</div>

@@ -1,106 +1,154 @@
 ﻿<div class="col-md-6  d-flex flex-column pb-2">
-    <h3 class="mb-3" style="font-size:20px; font-weight:bolder; ">WORK EXPERIENCE</h3>
+    <h3 class="mb-3" style="font-size:20px; font-weight:bolder; ">WORK EXPERIENCE </h3>
+
     @foreach (var ex in Experiences)
     {
         <div class="mb-2 d-flex">
             <div>
-                @foreach (var experience in @ex.experience)
-                {
-                    <!--WorkTitle-->
-                    @if (experience.IsEditingWorkTitle)
-                    {
-                        <div class="d-flex">
-                            <Markdown type="text" class="fw-bold" @bind-value=@experience.work_title />
-                            <InputDate @bind-Value=@experience.start_date style="max-height:32px;" />
-                            <button class="btn btn-outline-dark btn-sm ms-3" style="max-height:32px;" @onclick="@(()=>SaveWorkTitle(experience))"><Icon Name="IconName.Save" /></button>
-                        </div>
+                <div class="body-timeline">
+                    <ul class="timeline">
+                        <li class="timeline-event">
+                            <label class="timeline-event-icon"></label>
+                            <div class="timeline-event-copy">
+                                @foreach (var experience in @ex.experience)
+                                {
+                                    <!--CompanyName-->
+                                    @if (experience.IsEditingCompanyName)
+                                    {
+                                        <div class="d-flex">
+                                            <Markdown type="text" class="fw-bold" @bind-value=@experience.company_name />
+                                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveCompanyName(experience))"><Icon Name="IconName.Save" /></button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="fw-bold timeline-event-thumbnail" style="max-height:23px">
+                                            @((MarkupString)experience.company_name)
+                                            @if (!IsPreview)
+                                            {
+                                                <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditCompanyName(experience))">
+                                                    <Icon Name="IconName.Edit" />
+                                                </button>
+                                            }
+                                        </p>
+                                    }
+                                    <!--WorkTitle-->
+                                    @if (experience.IsEditingWorkTitle)
+                                    {
+                                        <div class="d-flex">
+                                            <Markdown type="text" class="fw-bold" @bind-value=@experience.work_title />
+                                            <InputDate @bind-Value=@experience.start_date style="max-height:32px;" />
+                                            <button class="btn btn-outline-dark btn-sm ms-3" style="max-height:32px;" @onclick="@(()=>SaveWorkTitle(experience))"><Icon Name="IconName.Save" /></button>
+                                        </div>
 
-                    }
-                    else
-                    {
-                        <h5 class="fw-bold">             
-                            @((MarkupString)experience.work_title) (@experience?.start_date.Value.Year)
-                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditWorkTitle(experience))">
-                                <Icon Name="IconName.Edit" />
-                            </button>
-                        </h5>
+                                    }
+                                    else
+                                    {
+                                        <h5 class="fw-bold">
+                                            @((MarkupString)experience.work_title) @* (@experience?.start_date.Value.Year) *@
+                                            @if (!IsPreview)
+                                            {
+                                                <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditWorkTitle(experience))">
+                                                    <Icon Name="IconName.Edit" />
+                                                </button>
+                                            }
+                                        </h5>
 
-                    }
-                    <!--CompanyName-->
-                    @if (experience.IsEditingCompanyName)
-                    {
-                        <div class="d-flex">
-                            <Markdown type="text" class="fw-bold" @bind-value=@experience.company_name />
-                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveCompanyName(experience))"><Icon Name="IconName.Save" /></button>
-                        </div>
-                    }
-                    else
-                    {
-                        <h6 class="fw-bold">
-                            @((MarkupString)experience.company_name)
-                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditCompanyName(experience))">
-                                <Icon Name="IconName.Edit" />
-                            </button>
-                        </h6>
-                    }
-                    <!--ExperienceDesc-->
-                    @if (experience.IsEditingExperienceDesc)
-                    {
-                        <div class="d-flex mb-1">
-                            <div class="vr me-1"></div>
-                            <Markdown @bind-value="@experience.project_details" />
-                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveExperienceDesc(experience))" style="max-height:31px"><Icon Name="IconName.Save" /></button>
+                                    }
 
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="d-flex mb-1">
-                            <div class="vr me-1"></div>
-                            <p>@((MarkupString)experience.project_details)</p>
-                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditExperienceDesc(experience))" style="max-height:31px">
-                                <Icon Name="IconName.Edit" />
-                            </button>
-                        </div>
-                    }
-                    <!--Steps-->
-                    @foreach (var step in experience.ProjectSteps)
-                    {
-                        @if (step.IsEditingStep)
-                        {
-                            <div class="d-flex mb-1">
-                                <div class="vr me-1"></div>
-                                <Markdown type="text" @bind-value=@step.step />
-                                <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveProjectStep(step))" style="max-height:31px"><Icon Name="IconName.Save" /></button>
+                                    <!--ExperienceDesc-->
+                                    @if (experience.IsEditingExperienceDesc)
+                                    {
+                                        <div class="d-flex mb-1">
+
+                                            <Markdown @bind-value="@experience.project_details" />
+                                            <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveExperienceDesc(experience))" style="max-height:31px"><Icon Name="IconName.Save" /></button>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex mb-1">
+
+                                            <p class="text-justify">@((MarkupString)experience.project_details)</p>
+                                            @if (!IsPreview)
+                                            {
+                                                <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>EditExperienceDesc(experience))" style="max-height:31px">
+                                                    <Icon Name="IconName.Edit" />
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                    <!--Steps-->
+                                    @foreach (var step in experience.ProjectSteps)
+                                    {
+
+                                        @if (step.IsEditingStep)
+                                        {
+                                            <div class="d-flex mb-1">
+
+                                                <Markdown type="text" @bind-value=@step.step />
+
+                                                <button class="btn btn-outline-dark btn-sm ms-3" @onclick="@(()=>SaveProjectStep(step))" style="max-height:31px"><Icon Name="IconName.Save" /></button>
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="d-flex mb-1">
+
+                                                <p>@((MarkupString)step.step)</p>
+                                                @if (!IsPreview)
+                                                {
+                                                    <button class="btn btn-outline-dark btn-sm ms-3 me-3" @onclick="@(()=>EditProjectStep(step))" style="max-height:31px">
+                                                        <Icon Name="IconName.Edit" />
+                                                    </button>
+
+                                                    <button class="btn btn-outline-danger " @onclick="@(()=>RemoveStep(experience,step))" style="max-height:31px"> <Icon Name="IconName.Delete" /></button>
+                                                }
+                                            </div>
+
+                                        }
+
+                                    }
+                                    @if (!IsPreview)
+                                    {
+                                        <button class="btn btn-outline-warning " @onclick="@(()=>AddStepToExperience(experience))"> <Icon Name="IconName.Add" /> Add another step</button>
+                                        <!--Delete experience-->
+                                        <button class="btn btn-outline-danger btn-sm ms-3" style="max-height:31px" @onclick=@(()=>RemoveExperience(ex.experience,experience))><Icon Name="@("fa-solid fa-delete-left")" /> delete experience</button>
+                                    }
+
+                                }
 
                             </div>
-                        }
-                        else
-                        {
-                            <div class="d-flex mb-1">
-                                <div class="vr me-1"></div>
-                                <p>@((MarkupString)step.step)</p>
-                                <button class="btn btn-outline-dark btn-sm ms-3 me-3" @onclick="@(()=>EditProjectStep(step))" style="max-height:31px">
-                                    <Icon Name="IconName.Edit" />
-                                </button>
-                                <button class="btn btn-outline-danger " @onclick="@(()=>RemoveStep(experience,step))" style="max-height:31px"> <Icon Name="IconName.Delete" /></button>
+                        </li>
 
-                            </div>
-                        }
-
-                    }
-                    <button class="btn btn-outline-warning " @onclick="@(()=>AddStepToExperience(experience))"> <Icon Name="IconName.Add" /> Add another step</button>
-                     <!--Delete experience-->
-                    <button class="btn btn-outline-danger btn-sm ms-3" style="max-height:31px" @onclick=@(()=>RemoveExperience(ex.experience,experience))><Icon Name="@("fa-solid fa-delete-left")" /> delete experience</button>
-                }
-               
-
+                    </ul>
+                </div>
             </div>
 
 
         </div>
+
     }
-
-    <button class="btn btn-outline-dark w-50" @onclick="AddExperience"> <Icon Name="IconName.Add" /> Add an experience</button>
-
+    @if (!IsPreview)
+    {
+        <button class="btn btn-outline-dark w-50" @onclick="AddExperience"> <Icon Name="IconName.Add" /> Add an experience</button>
+    }
 </div>
+@* <div class="body-timeline">
+    <ul class="timeline">
+        <li class="timeline-event">
+            <label class="timeline-event-icon"></label>
+            <div class="timeline-event-copy">
+                <p class="timeline-event-thumbnail">April 2011 - heute</p>
+                <h3>Geil,Danke! GmbH</h3>
+                <h4>Geschäftsführerin eines Web-Studios</h4>
+                <p><strong>Schwerpunkt: Frontend-Entwicklung</strong><br>Entwickeln von anspruchsvollen, animierten, responsive und adaptive Webseiten mit HTML5, SCSS, jQuery; für alle Browser, optimiert für Desktop, Notebook, Smartphones und Tablets (iOS, Android, Windows).</p>
+                <p><strong>Projektmanagement mit Scrum</strong><br>Ständiges Verbessern des agilen Entwicklungsprozesses beispielsweise durch Grunt, Yeoman, GIT, JIRA und BrowserStack.</p>
+            </div>
+        </li>
+
+    </ul>
+</div>
+ *@

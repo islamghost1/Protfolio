@@ -1,7 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Helvetica);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,700);
 html, body {
-    font-family: 'Helvetica';
-    font-size:16px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+
+    line-height: 1.5;
+    letter-spacing: 0.05em;
     height: auto;
     background-color: #fff;
     transition: background 0.2s linear;
@@ -17,8 +20,15 @@ html, body {
         body h3 ,h6 {
             color:#FE3E45
         }
+        .h1{
+            /*font-weight:bolder*/
+        }
 
-       
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}      
 a, .btn-link {
     color: #006bb7;
 }

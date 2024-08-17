@@ -1,4 +1,6 @@
-﻿namespace Portfolio.Data.Interfaces
+﻿using Portfolio.Client.Models;
+
+namespace Portfolio.Data.Interfaces
 {
     public interface IUpdateData
     {
@@ -15,6 +17,7 @@
         void UpdateEndDate(int id, int user_id, DateTime endDate);
 
         void UpdateProjectStep(int id, int user_id, int project_id, string step);
+        void UpdateSkill(Skills skill);
 
     }
 }

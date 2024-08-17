@@ -3,9 +3,9 @@ using Portfolio.Data.Interfaces;
 
 namespace Portfolio.Data
 {
-    public class UpdateData:IUpdateData
+    public class UpdateData : IUpdateData
     {
-        public void UpdateWorkTitle(int id , int user_id , string workTitle)
+        public void UpdateWorkTitle(int id, int user_id, string workTitle)
         {
 
             using (var db = new DbContextPortfolio())
@@ -13,19 +13,19 @@ namespace Portfolio.Data
                 try
                 {
                     var userDetails = db.Projects
-                               .Where(x => x.id == id  && x.user_id == user_id)
+                               .Where(x => x.id == id && x.user_id == user_id)
                                .FirstOrDefault();
-                    if (userDetails != null) 
+                    if (userDetails != null)
                     {
                         userDetails.work_title = workTitle;
                         db.SaveChanges();
-                        
+
                     }
                     else
                     {
                         throw new Exception("Project not found");
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -35,7 +35,7 @@ namespace Portfolio.Data
 
             }
         }
-        public void UpdateCompanyName(int id , int user_id , string companyName)
+        public void UpdateCompanyName(int id, int user_id, string companyName)
         {
 
             using (var db = new DbContextPortfolio())
@@ -43,19 +43,19 @@ namespace Portfolio.Data
                 try
                 {
                     var userDetails = db.Projects
-                               .Where(x => x.id == id  && x.user_id == user_id)
+                               .Where(x => x.id == id && x.user_id == user_id)
                                .FirstOrDefault();
-                    if (userDetails != null) 
+                    if (userDetails != null)
                     {
                         userDetails.company_name = companyName;
                         db.SaveChanges();
-                        
+
                     }
                     else
                     {
                         throw new Exception("Project not found");
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +79,7 @@ namespace Portfolio.Data
                     {
                         userDetails.project_name = projectName;
                         db.SaveChanges();
-                        
+
                     }
                     else
                     {
@@ -109,7 +109,7 @@ namespace Portfolio.Data
                     {
                         userDetails.project_details = projectDetails;
                         db.SaveChanges();
-                        
+
                     }
                     else
                     {
@@ -139,7 +139,7 @@ namespace Portfolio.Data
                     {
                         userDetails.start_date = startDate;
                         db.SaveChanges();
-                       
+
                     }
                     else
                     {
@@ -169,7 +169,7 @@ namespace Portfolio.Data
                     {
                         userDetails.end_date = endDate;
                         db.SaveChanges();
-                     
+
                     }
                     else
                     {
@@ -193,13 +193,13 @@ namespace Portfolio.Data
                 try
                 {
                     var projectStep = db.Project_steps
-                               .Where(x => x.id == id && x.user_id == user_id &&  x.project_id == project_id )
+                               .Where(x => x.id == id && x.user_id == user_id && x.project_id == project_id)
                                .FirstOrDefault();
                     if (projectStep != null)
                     {
                         projectStep.step = step;
                         db.SaveChanges();
-                     
+
                     }
                     else
                     {
@@ -213,6 +213,37 @@ namespace Portfolio.Data
                     throw;
                 }
 
+            }
+        }
+
+        public void UpdateSkill(Skills skill)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var skill_ = db.Skills
+                               .Where(x => x.id == skill.id && x.user_id == skill.user_id )
+                               .FirstOrDefault();
+                    if (skill_ != null)
+                    {
+                        skill_.skill_name = skill.skill_name;
+                        skill_.skill_desc = skill.skill_desc;
+                        skill_.category = skill.category;
+                        db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        throw new Exception("Project not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
             }
         }
     }
