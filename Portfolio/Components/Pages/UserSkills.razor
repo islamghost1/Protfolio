@@ -12,7 +12,7 @@
                     <div class="container-fluid">
                         @foreach (var skill in categorySkills)
                         {
-                            <div class="w-100">
+                            <div class="w-100 ">
                                 <input @bind-value=@skill.skill_name class="fw-bold" />
                                 <input @bind-value=@skill.skill_desc />
                                 <Dropdown>
@@ -20,44 +20,89 @@
                                         @skill.category
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+                                        @foreach (var _category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
                                         {
-                                            <DropdownItem @onclick=@(()=>{skill.category = (int)Enum.Parse(typeof(Client.Models.SkillCategory), category.ToString()); })>@category</DropdownItem>
+                                            <DropdownItem @onclick=@(()=>{skill.category = (int)Enum.Parse(typeof(Client.Models.SkillCategory), _category.ToString()); })>@_category</DropdownItem>
                                         }
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
                             <button class="btn btn-outline-dark me-2" style="max-height:32px" @onclick=@(()=>UpdateSkill(skill))><Icon Name="IconName.Save" /></button>
+                            <button class="btn btn-outline-danger me-2" style="max-height:32px" @onclick=@(()=>DeleteSkill(skill))><Icon Name="IconName.Delete" /></button>
                         }
                     </div>
+                    <button class="btn btn-outline-dark" @onclick=@(()=>AddSkill(category))> Add a skill <Icon Name="IconName.Add" /></button>
                 </li>
 
             </ul>
 
         }
-        <button class="btn btn-outline-dark" @onclick=AddSkill> Add a skill <Icon Name="IconName.Add" /></button>
+
     }
     else
     {
-        @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
-        {
-            string _category;
-            var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
-            <ul>
-                <li>
-                    <h4>@category</h4>
-                    <div class="d-flex flex-wrap">
-                        @foreach (var skill in categorySkills)
-                        {
-                            <div class="w-25 text-center">
-                                <i class="@skill.skill_desc  fs-1"></i>
-                                <p class="fw-bold">@skill.skill_name </p>
+        <div id="carouselExampleDark" class="carousel carousel-dark slide"  >
+            <div class="carousel-indicators">
+                @{
+                    int indexBtn = 0;
+                }
+                @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+                {
+                    if (indexBtn == 0)
+                    {
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    }
+                    else
+                    {
 
-                            </div>
-                        }
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="@indexBtn" aria-label="Slide @(indexBtn+1)"></button>
+
+                    }
+                    indexBtn++;
+                }
+            </div>
+            <div class="carousel-inner pb-5" >
+                @{
+                    int indexCateg = 0;
+                }
+                @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+                {
+                    string _category;
+                    var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
+                    <div class="carousel-item @(indexCateg>0?"":"active") bg-white">
+                        <h4 class="text-secondary"><strong>@category</strong></h4>
+                        <div class="d-flex justify-content-center flex-wrap">
+                            @foreach (var skill in categorySkills)
+                            {
+                                <div class="text-center shadow-lg rounded-3 me-2 my-2 pt-2" style="min-width:25%">
+                                    @if (!skill.skill_desc.Contains(".png"))
+                                    {
+                                        <i class="@skill.skill_desc  fs-1"></i>
+                                    }
+                                    else
+                                    {
+                                        <img src="@skill.skill_desc" />
+
+                                    }
+                                    <p class="fw-bold">@skill.skill_name </p>
+                                </div>
+                            }
+                        </div>
                     </div>
-                </li>
-            </ul>
-        }
+                    indexCateg++;
+
+                }
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
     }
 </div>

@@ -70,7 +70,6 @@ namespace Portfolio.Client.Models
         ProgrammingLanguages = 0,
         WebDevelopment = 1,
         MobileDevelopment = 2,
-        BackendDevelopment = 3,
         Databases = 4,
         VersionControl = 5,
         DevOps_CICD = 6,

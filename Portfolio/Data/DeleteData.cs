@@ -63,5 +63,35 @@ namespace Portfolio.Data
 
             }
         }
+        public void DeleteSkill(Skills skill)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var _skill = db.Skills
+                               .Where(x => x.id == skill.id)
+                               .FirstOrDefault();
+                    if (_skill != null)
+                    {
+                        db.Remove(_skill);
+                        db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        throw new Exception("skill not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+
+        }
     }
 }

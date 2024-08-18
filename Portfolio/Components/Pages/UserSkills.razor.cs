@@ -23,15 +23,15 @@ namespace Portfolio.Components.Pages
         {
             userSkills = await Get.GetSkills(UserID);
         }
-        void AddSkill()
+        void AddSkill(object skillCategory)
         {
             Skills skill = new Skills
             {
                 user_id = UserID,
                 skill_name = "skill name",
                 skill_desc = "skill desc",
-                category = (int)SkillCategory.ProgrammingLanguages,
-                
+                category = (int)Enum.Parse(typeof(Client.Models.SkillCategory), skillCategory.ToString())
+
             };
             Put.AddSkill(skill);
             userSkills.Add(skill);
@@ -39,6 +39,11 @@ namespace Portfolio.Components.Pages
         void UpdateSkill(Skills skill) 
         { 
             Update.UpdateSkill(skill);
-        }    
+        }
+        void DeleteSkill(Skills skill) 
+        {
+            Delete.DeleteSkill(skill);
+            userSkills.Remove(skill);
+        }
     }
 }
