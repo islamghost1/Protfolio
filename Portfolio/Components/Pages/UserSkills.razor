@@ -69,19 +69,19 @@
                 {
                     string _category;
                     var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
-                    <div class="carousel-item @(indexCateg>0?"":"active") bg-white">
+                    <div class="carousel-item @(indexCateg>0?"":"active")">
                         <h4 class="text-secondary"><strong>@category</strong></h4>
-                        <div class="d-flex justify-content-center flex-wrap">
+                        <div class="d-flex justify-content-center  flex-wrap">
                             @foreach (var skill in categorySkills)
                             {
-                                <div class="text-center shadow-lg rounded-3 me-2 my-2 pt-2" style="min-width:25%">
-                                    @if (!skill.skill_desc.Contains(".png"))
+                                <div class=" text-center shadow-lg rounded-3 me-2 my-2 pt-2 " style="min-width:25%">
+                                    @if (!skill.skill_desc.Contains("//"))
                                     {
                                         <i class="@skill.skill_desc  fs-1"></i>
                                     }
                                     else
                                     {
-                                        <img src="@skill.skill_desc" />
+                                        <img src="@skill.skill_desc" style="max-height:70px;max-width:70px"  />
 
                                     }
                                     <p class="fw-bold">@skill.skill_name </p>

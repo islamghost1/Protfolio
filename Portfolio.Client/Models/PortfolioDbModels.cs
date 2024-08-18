@@ -73,7 +73,6 @@ namespace Portfolio.Client.Models
         Databases = 4,
         VersionControl = 5,
         DevOps_CICD = 6,
-        CloudPlatforms = 7,
         SoftwareDevelopmentTools = 8,
         Testing_QA = 9,
         MachineLearning_DataScience = 10,
