@@ -93,5 +93,36 @@ namespace Portfolio.Data
             }
 
         }
+
+        public void DeleteEducation(Education education)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var _education = db.Education
+                               .Where(x => x.id == education.id)
+                               .FirstOrDefault();
+                    if (_education != null)
+                    {
+                        db.Remove(_education);
+                        db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        throw new Exception("education not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+
+        }
     }
 }

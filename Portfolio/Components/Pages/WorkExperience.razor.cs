@@ -28,7 +28,7 @@ namespace Portfolio.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Experiences = await Get.GetProjects(1);
+            Experiences = await Get.GetProjectsAsync(1);
         }
         //add || remove 
         private void AddExperience()

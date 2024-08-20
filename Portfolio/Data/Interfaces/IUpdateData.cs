@@ -18,6 +18,7 @@ namespace Portfolio.Data.Interfaces
 
         void UpdateProjectStep(int id, int user_id, int project_id, string step);
         void UpdateSkill(Skills skill);
+        void UpdateEducation(Education education);
 
     }
 }

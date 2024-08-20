@@ -1,4 +1,5 @@
-﻿using Portfolio.Client.Models;
+﻿using Blazorise;
+using Portfolio.Client.Models;
 using Portfolio.Data.Interfaces;
 
 namespace Portfolio.Data
@@ -223,13 +224,47 @@ namespace Portfolio.Data
                 try
                 {
                     var skill_ = db.Skills
-                               .Where(x => x.id == skill.id && x.user_id == skill.user_id )
+                               .Where(x => x.id == skill.id && x.user_id == skill.user_id)
                                .FirstOrDefault();
                     if (skill_ != null)
                     {
                         skill_.skill_name = skill.skill_name;
                         skill_.skill_desc = skill.skill_desc;
                         skill_.category = skill.category;
+                        db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        throw new Exception("Project not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+            }
+        }
+
+        public void UpdateEducation(Education education)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var skill_ = db.Education
+                    .Where(x => x.id == education.id && x.user_id == education.user_id)
+                               .FirstOrDefault();
+                    if (skill_ != null)
+                    {
+                        skill_.establishment = education.establishment;
+                        skill_.diploma = education.diploma;
+                        skill_.icon = education.icon;
+                        skill_.start_date = education.start_date;
+                        skill_.end_date = education.end_date;
+                        skill_.Description = education.Description;
                         db.SaveChanges();
 
                     }

@@ -28,7 +28,7 @@ namespace Portfolio.Data
             }
         }
         //work experience
-        public Task<List<Experience>> GetProjects(int id)
+        public Task<List<Experience>> GetProjectsAsync(int id)
         {
 
             using (var db = new DbContextPortfolio())
@@ -76,7 +76,7 @@ namespace Portfolio.Data
             }
         }
         // skills 
-        public Task<List<Skills>> GetSkills(int userId)
+        public Task<List<Skills>> GetSkillsAsync(int userId)
         {
 
             using (var db = new DbContextPortfolio())
@@ -87,6 +87,27 @@ namespace Portfolio.Data
                             .Where(x => x.user_id == userId)
                             .ToList();
                     return Task.FromResult(skills);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+        }
+        //Education 
+        public Task<List<Education>> GetEducationAsync(int userId)
+        {
+
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var educations = db.Education
+                            .Where(x => x.user_id == userId)
+                            .ToList();
+                    return Task.FromResult(educations);
                 }
                 catch (Exception ex)
                 {

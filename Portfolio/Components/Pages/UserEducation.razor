@@ -1,0 +1,48 @@
+﻿<div class="col-12  mt-3">
+    <h3 class="mb-3" style="font-size:20px; font-weight:bolder">EDUCATION</h3>
+    @if (!IsPreview)
+    {
+        @foreach (var level in userEducation)
+        {
+            <div class="row">
+                <input type="text" @bind-value=@level.icon />
+                <input type="text" @bind-value=level.establishment />
+                <input type="date" @bind-value=level.start_date />
+                <input type="date" @bind-value=level.end_date />
+                <input type="text" @bind-value=@level.Description />
+            </div>
+            <button class="btn btn-outline-dark" @onclick=@(()=>UpdateEducation(level))><Icon Name="IconName.Save" /></button>
+            <button class="btn btn-outline-danger" @onclick="@(()=>DeleteEducation(level))"><Icon Name="IconName.Delete" /></button>
+        }
+        <button class="btn btn-outline-dark" @onclick=@AddEducation><Icon Name="IconName.Add" />add education</button>
+
+    }
+    else
+    {
+        @foreach (var level in userEducation)
+        {
+            <div class="d-flex justify-content-center  flex-wrap">
+
+                <div class=" text-center shadow-lg rounded-3 me-2 px-2 my-2 pt-2 mb-2" style="min-width:25%">
+                    @if (!level.icon.Contains("//"))
+                    {
+                        <i class="@level.icon  fs-1"></i>
+                    }
+                    else
+                    {
+                        <img src="@level.icon" style="max-height:200px;max-width:200px" />
+
+                    }
+                    <p class="fw-bold">@level.establishment </p>
+                    <p class="fw-bold">@level?.start_date.Value.ToString("MM/yyyy") - @level?.end_date.Value.ToString("MM/yyyy") </p>
+                    <p class="fw-bold text-secondary">@level.Description </p>
+                </div>
+
+            </div>
+
+        }
+    }
+
+
+
+</div>

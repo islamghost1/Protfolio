@@ -6,5 +6,7 @@ namespace Portfolio.Data.Interfaces
     {
         void DeleteExperience(Projects experience);
         void DeleteStep(ProjectSteps step);
+        void DeleteSkill(Skills skill);
+        void DeleteEducation(Education education);
     }
 }

@@ -74,6 +74,26 @@ namespace Portfolio.Data
             }
 
         }
+        //education
+        public Task AddEducation(Education education)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    db.Education.Add(education);
+                    db.SaveChanges();
+                    return Task.CompletedTask;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+
+        }
     }
    
 }

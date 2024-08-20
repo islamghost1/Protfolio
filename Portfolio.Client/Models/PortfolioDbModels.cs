@@ -108,7 +108,21 @@ namespace Portfolio.Client.Models
         public string? job { get; set; }
     }
 
-
+    [Table("education", Schema = "portfolio")]
+    public class Education
+    {
+        [Key]
+        public int id { get; set; }
+        [ForeignKey("users")]
+        public int user_id { get; set; }
+        [ForeignKey("projects")]
+        public string? establishment { get; set; }
+        public string? diploma { get; set; }
+        public string? icon { get; set; }
+        public string? Description { get; set; }
+        public DateTime? start_date { get; set; }
+        public DateTime? end_date { get; set; }
+    }
     public class Experience
     {
         public List<Projects> experience { get; set; } = new();

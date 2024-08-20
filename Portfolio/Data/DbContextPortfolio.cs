@@ -14,6 +14,7 @@ namespace Portfolio.Data
         public DbSet<ProjectSteps> Project_steps { get; set; }
         public DbSet<Skills> Skills { get; set; }
         public DbSet<SocialsLinks> Socials_links { get; set; }
+        public DbSet<Education> Education { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

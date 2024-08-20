@@ -21,7 +21,7 @@ namespace Portfolio.Components.Pages
         private List<Skills> userSkills = new();
         protected override async Task OnInitializedAsync()
         {
-            userSkills = await Get.GetSkills(UserID);
+            userSkills = await Get.GetSkillsAsync(UserID);
         }
         void AddSkill(object skillCategory)
         {
