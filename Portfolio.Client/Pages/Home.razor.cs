@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Portfolio.Client.Models;
 
 namespace Portfolio.Client.Pages
 {
+    [AllowAnonymous]
     public partial class Home : ComponentBase
     {
         //instances
