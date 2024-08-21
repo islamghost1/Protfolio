@@ -6,10 +6,17 @@ namespace Portfolio.Components.Pages
 {
     public partial class ImageNUserName : ComponentBase
     {
+        int UserID = 1;
         //instances
         GetData Get = new();
-        //vars 
+        UpdateData update = new();
         Users? Users = new Users();
+
+        //models
+        PhoneNumberModel PhoneModel = new();
+        EmailModel EmailModel = new();
+        AddressModel AddressModel = new();
+        //vars 
         string? error;
         bool isEditingName;
         bool isEditingPhone;
@@ -21,6 +28,10 @@ namespace Portfolio.Components.Pages
             try
             {
                 Users = await Get.GetUserDetailsAsync(1);
+                PhoneModel.PhoneNumber = Users?.phone ?? "+0(000) 000-0000";
+                EmailModel.Email = Users?.email ?? "email@email.com";
+                AddressModel.Address = Users?.address ?? "AAAA,AA,AAAA";
+
             }
             catch (Exception ex)
             {
@@ -36,18 +47,20 @@ namespace Portfolio.Components.Pages
         private void EditPhone()
         {
             isEditingPhone = !isEditingPhone;
-        } 
+        }
         private void SavePhone()
         {
             EditPhone();
+            update.UpdatePhoneNum(PhoneModel.PhoneNumber, UserID);
         }
         private void EditEmail()
         {
             isEditingEmail = !isEditingEmail;
-        } 
+        }
         private void SaveEmail()
         {
             EditEmail();
+            update.UpdateEmail(EmailModel.Email, UserID);
         }
         private void EditAddress()
         {
@@ -57,6 +70,7 @@ namespace Portfolio.Components.Pages
         private void SaveAddress()
         {
             EditAddress();
+            update.UpdateAddress(AddressModel.Address, UserID);
         }
 
         private void EditDescription()
@@ -64,9 +78,10 @@ namespace Portfolio.Components.Pages
             isEditingDescription = !isEditingDescription;
         }
 
-        private void SaveDescription()
+        private void SaveDescription(string desc)
         {
             EditDescription();
+            update.UpdateDescription(desc, UserID);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Google.Protobuf.WellKnownTypes;
 using Portfolio.Client.Models;
 using Portfolio.Data.Interfaces;
 
@@ -271,6 +272,116 @@ namespace Portfolio.Data
                     else
                     {
                         throw new Exception("Project not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+            }
+        }
+
+        // user details
+        public void UpdatePhoneNum(string phoneNum, int userId)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var userDetails = db.Users
+                    .Where(x => x.id == userId).FirstOrDefault();
+
+                    if (userDetails != null)
+                    {
+                        userDetails.phone = phoneNum;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("User not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+            }
+        }
+        public void UpdateAddress(string address, int userId)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var userDetails = db.Users
+                    .Where(x => x.id == userId).FirstOrDefault();
+
+                    if (userDetails != null)
+                    {
+                        userDetails.address = address;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("User not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+            }
+        }  
+        public void UpdateEmail(string email, int userId)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var userDetails = db.Users
+                    .Where(x => x.id == userId).FirstOrDefault();
+
+                    if (userDetails != null)
+                    {
+                        userDetails.email = email;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("User not found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+            }
+        }
+        public void UpdateDescription(string desc, int userId)
+        {
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var userDetails = db.Users
+                    .Where(x => x.id == userId).FirstOrDefault();
+
+                    if (userDetails != null)
+                    {
+                        userDetails.description = desc;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("User not found");
                     }
 
                 }
