@@ -27,11 +27,11 @@
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
-                            <button class="btn btn-outline-dark me-2" style="max-height:32px" @onclick=@(()=>UpdateSkill(skill))><Icon Name="IconName.Save" /></button>
+                            <button class="btn btn-outline-secondary me-2" style="max-height:32px" @onclick=@(()=>UpdateSkill(skill))><Icon Name="IconName.Save" /></button>
                             <button class="btn btn-outline-danger me-2" style="max-height:32px" @onclick=@(()=>DeleteSkill(skill))><Icon Name="IconName.Delete" /></button>
                         }
                     </div>
-                    <button class="btn btn-outline-dark" @onclick=@(()=>AddSkill(category))> Add a skill <Icon Name="IconName.Add" /></button>
+                    <button class="btn btn-outline-secondary" @onclick=@(()=>AddSkill(category))> Add a skill <Icon Name="IconName.Add" /></button>
                 </li>
 
             </ul>
@@ -41,7 +41,7 @@
     }
     else
     {
-        <div id="carouselExampleDark" class="carousel carousel-dark slide"  >
+        <div id="carouselExample" class="carousel rounded-2 slide"  data-bs-ride="carousel" data-bs-touch="true">
             <div class="carousel-indicators">
                 @{
                     int indexBtn = 0;
@@ -50,12 +50,12 @@
                 {
                     if (indexBtn == 0)
                     {
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button"  data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     }
                     else
                     {
 
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="@indexBtn" aria-label="Slide @(indexBtn+1)"></button>
+                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="@indexBtn" aria-label="Slide @(indexBtn+1)"></button>
 
                     }
                     indexBtn++;
@@ -69,7 +69,7 @@
                 {
                     string _category;
                     var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
-                    <div class="carousel-item @(indexCateg>0?"":"active")">
+                    <div class="carousel-item @(indexCateg>0?"":"active")" data-bs-interval="9000">
                         <h4 class="text-secondary"><strong>@category</strong></h4>
                         <div class="d-flex justify-content-center  flex-wrap">
                             @foreach (var skill in categorySkills)
@@ -94,11 +94,11 @@
                 }
 
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>

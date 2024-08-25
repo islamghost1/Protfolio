@@ -5,20 +5,20 @@ html, body {
     line-height: 1.5;
     letter-spacing: 0.05em;
     height: auto;
-    background-color: #fff;
+    /*background-color: #fff;*/
     transition: background 0.2s linear;
     text-align: justify;
 }
     body.dark, .header.dark {
-        background-color: black;
+        /*background-color: black;*/
     }
         /* #9b59b6 */
 
         body.dark h1 p, body.dark {
-            color: #fff;
+            /*color: #fff;*/
         }
         body h3 ,h6 {
-            color:#FE3E45
+            /*color:#FE3E45*/
         }
         .h1{
             /*font-weight:bolder*/

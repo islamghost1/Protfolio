@@ -2,27 +2,28 @@
     <div class="col-md-6 d-flex flex-column align-items-center">
         <img class="border-0 rounded-2 mb-3 shadow-lg mb-4 bg-body rounded" style="height:300px;width:300px" src="/src/islamSissaoui.jpg" alt="Profile picture">
         <h1 class="text-center" style="font-weight:bolder">@Users?.name?.ToUpper() @Users?.last_name?.ToUpper()</h1>
-
+       
     </div>
     <div class="col-md-6 mt-5">
         <div class="p-3">
+
             <!--PHONE-->
             @if (isEditingPhone)
             {
                 <EditForm Model="@PhoneModel" OnValidSubmit="SavePhone" FormName="PhoneModel">
-                     <DataAnnotationsValidator />
+                    <DataAnnotationsValidator />
                     <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
 
                     <div class="d-flex">
                         <InputMask Mask="+9(999) 999-9999" @bind-value="@PhoneModel.PhoneNumber" Class="w-50" />
-                        <button class="btn btn-outline-dark btn-sm ms-3" type="submit"><Icon Name="IconName.Save" /></button>
+                        <button class="btn btn-outline-secondary btn-sm ms-3" type="submit"><Icon Name="IconName.Save" /></button>
                     </div>
-            
+
                 </EditForm>
             }
             else
             {
-                <p><i class="fa-solid fa-phone me-3"></i> @PhoneModel.PhoneNumber <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditPhone"><Icon Name="IconName.Edit" /></button> </p>
+                <p><i class="fa-solid fa-phone me-3"></i> @PhoneModel.PhoneNumber <button class="btn btn-outline-secondary btn-sm ms-3" @onclick="EditPhone"><Icon Name="IconName.Edit" /></button> </p>
             }
             <hr>
             <!--EMAIL-->
@@ -31,7 +32,7 @@
                 <EditForm Model="EmailModel" OnValidSubmit="SaveEmail" FormName="EmailModel">
                     <div class="d-flex">
                         <InputMask Alias="email" @bind-value="@EmailModel.Email" Class="w-50" />
-                        <button class="btn btn-outline-dark btn-sm ms-3" type="submit"><Icon Name="IconName.Save" /></button>
+                        <button class="btn btn-outline-secondary btn-sm ms-3" type="submit"><Icon Name="IconName.Save" /></button>
                     </div>
                     <DataAnnotationsValidator />
                     <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
@@ -39,7 +40,7 @@
             }
             else
             {
-                <p><i class="fa-solid fa-envelope me-3"></i> @EmailModel.Email <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditEmail"><Icon Name="IconName.Edit" /></button></p>
+                <p><i class="fa-solid fa-envelope me-3"></i> @EmailModel.Email <button class="btn btn-outline-secondary btn-sm ms-3" @onclick="EditEmail"><Icon Name="IconName.Edit" /></button></p>
             }
             <hr>
             <!--ADDRESS-->
@@ -47,8 +48,8 @@
             {
                 <EditForm Model="AddressModel" OnValidSubmit="SaveAddress" FormName="AddressModel">
                     <div class="d-flex">
-                        <InputMask   @bind-value="@AddressModel.Address" Class="w-50" />
-                        <button class="btn btn-outline-dark btn-sm ms-3" type="submit"><Icon Name="IconName.Save" /></button>
+                        <InputMask @bind-value="@AddressModel.Address" Class="w-50" />
+                        <button class="btn btn-outline-secondary btn-sm ms-3" type="submit"><Icon Name="IconName.Save" /></button>
                     </div>
                     <DataAnnotationsValidator />
                     <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
@@ -57,23 +58,30 @@
             }
             else
             {
-                <p><i class="fa-solid fa-location-dot me-3"></i> @AddressModel.Address <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditAddress"><Icon Name="IconName.Edit" /></button></p>
+                <p><i class="fa-solid fa-location-dot me-3"></i> @AddressModel.Address <button class="btn btn-outline-secondary btn-sm ms-3" @onclick="EditAddress"><Icon Name="IconName.Edit" /></button></p>
             }
             <hr>
+
             <!--SELF DESCRIPTION-->
             @if (isEditingDescription)
             {
                 <div class="d-flex">
                     <textarea @bind="@Users.description" Class="w-100"></textarea>
-                    <button class="btn btn-outline-dark btn-sm ms-3" @onclick="()=>SaveDescription(Users.description)"><Icon Name="IconName.Save" /></button>
+                    <button class="btn btn-outline-secondary btn-sm ms-3" @onclick="()=>SaveDescription(Users.description)"><Icon Name="IconName.Save" /></button>
                 </div>
             }
             else
             {
                 <section>
-                    <p>@Users?.description <button class="btn btn-outline-dark btn-sm ms-3" @onclick="EditDescription"><Icon Name="IconName.Edit" /></button></p>
+                    <p>@Users?.description <button class="btn btn-outline-secondary btn-sm ms-3" @onclick="EditDescription"><Icon Name="IconName.Edit" /></button></p>
                 </section>
             }
+
+
+
+
+        </div>
+        <div>
         </div>
     </div>
 </div>

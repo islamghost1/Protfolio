@@ -16,7 +16,7 @@ namespace Portfolio.Components.Pages
     {
         //instances
         GetData Get = new();
-       
+
         //vars
         Admins UserRole;
         private ClaimsPrincipal User;
@@ -92,5 +92,6 @@ namespace Portfolio.Components.Pages
         {
             IsPreview = !IsPreview;
         }
+
     }
 }
