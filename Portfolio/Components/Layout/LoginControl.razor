@@ -1,70 +1,81 @@
 ﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor _httpContextAccessor
 @inject HttpClient Http
 @if (User.Identity.Name != null)
 {
     <img src="@Avatar" />
-    <b>You are logged in as: @GivenName @Surname</b>
+    <b class="w-25 text-center">@GivenName-@Surname  </b>
     <a class="ml-md-auto btn btn-outline-dark"
        href="/Logout"
        target="_top">Logout</a>
 }
 else
 {
-    <a class="ml-md-auto btn btn-primary"
+    <a class="ml-md-auto btn btn-outline-dark"
        href="/Login"
        target="_top">Login</a>
 }
 @code {
     private ClaimsPrincipal User;
     private string GivenName;
+    private string Email;
     private string Surname;
     private string Avatar;
-    protected override void OnInitialized()
+    private string authMessage = "The user is NOT authenticated.";
+    private string role ;
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        try
+        await base.OnInitializedAsync();
+
+        if (authenticationState is not null)
         {
-            // Set the user to determine if they are logged in
-            User = _httpContextAccessor.HttpContext.User;
-            // Try to get the GivenName
-            var givenName =
-                _httpContextAccessor.HttpContext.User
-                .FindFirst(ClaimTypes.GivenName);
-            if (givenName != null)
+            var authState = await authenticationState;
+            User = authState?.User;
+
+            if (User?.Identity is not null && User.Identity.IsAuthenticated)
             {
-                GivenName = givenName.Value;
-            }
-            else
-            {
-                GivenName = User.Identity.Name;
-            }
-            // Try to get the Surname
-            var surname =
-                _httpContextAccessor.HttpContext.User
-                .FindFirst(ClaimTypes.Surname);
-            if (surname != null)
-            {
-                Surname = surname.Value;
-            }
-            else
-            {
-                Surname = "";
-            }
-            // Try to get Avatar
-            var avatar =
-            _httpContextAccessor.HttpContext.User
-            .FindFirst("urn:google:image");
-            if (avatar != null)
-            {
-                Avatar = avatar.Value;
-            }
-            else
-            {
-                Avatar = "";
+                authMessage = $"{User.Identity.Name} is authenticated.";
+
+                try
+                {
+                    // Try to get the GivenName
+                    var givenName = User.FindFirst(ClaimTypes.GivenName);
+                    GivenName = givenName != null ? givenName.Value : User.Identity.Name;
+
+                    // Try to get the Surname
+                    var surname = User.FindFirst(ClaimTypes.Surname);
+                    Surname = surname != null ? surname.Value : "";
+
+                    // Try to get the Surname
+                    var email = User.FindFirst(ClaimTypes.Email);
+                    Email = Email != null ? email.Value : "";
+
+
+                    // Try to get Avatar
+                    var avatar = User.FindFirst("urn:google:image");
+                    Avatar = avatar != null ? avatar.Value : "";
+
+                    var roleClaim = User.Claims.FirstOrDefault(c => c.Type == "role");
+                     if (roleClaim != null)
+                    {
+                        role = roleClaim.Value;
+                    }
+                    else
+                    {
+                        role = "No role assigned";
+                    }
+                }
+                catch
+                {
+                    // Handle any exceptions that occur during claim retrieval
+                }
             }
         }
-        catch { }
     }
 }

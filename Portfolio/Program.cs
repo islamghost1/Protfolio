@@ -5,6 +5,10 @@ using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Portfolio.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,18 +26,34 @@ builder.Services
 builder.Services.AddSingleton<ConfigurationHelper>();
 
 //configure google auth
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-builder.Services.AddAuthentication().AddGoogle(options =>
+builder.Services.AddAuthentication(options =>
 {
-    var clientid = builder.Configuration["Google:ClientId"];
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    options.LoginPath = "/Login";
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+})
+.AddGoogle(options =>
+{
     options.ClientId = builder.Configuration["Google:ClientId"];
     options.ClientSecret = builder.Configuration["Google:ClientSecret"];
+    options.CallbackPath = "/signin-google";
+    options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.CorrelationCookie.SameSite = SameSiteMode.Lax;
+    options.ClaimActions.MapJsonKey("role", "role");
+   
 });
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<HttpContextAccessor>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<HttpClient>();
 builder.Services.AddRazorPages();
+builder.Services.AddCascadingAuthenticationState();
 var app = builder.Build();
 app.Services.GetRequiredService<ConfigurationHelper>();
 

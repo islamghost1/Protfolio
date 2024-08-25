@@ -9,9 +9,14 @@ namespace Portfolio.Client.Models
         [Key]
         public int id { get; set; }
         public string? email_hash { get; set; }
-        public string? pass_hash { get; set; }
-        public char? auth_level { get; set; }
-        public DateTime timestamp { get; set; }
+        public auth_level auth_level { get; set; }
+        public DateTime created_at { get; set; }
+    }
+    public enum auth_level
+    {
+        Guest = 0,
+        Admin = 1,
+        SuperUser = 2,
     }
     [Table("project_steps", Schema = "portfolio")]
     public class ProjectSteps

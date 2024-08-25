@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
 using Portfolio.Client.Models;
 using Portfolio.Data.Interfaces;
+using Portfolio.Helpers;
 
 namespace Portfolio.Data
 {
@@ -58,7 +59,7 @@ namespace Portfolio.Data
                                     project_id = s.project_id,
                                     user_id = s.user_id,
                                     step = s.step
-                                }).ToList()
+                                }).OrderBy(j=>j.id).ToList()
                             })
                             .ToList();
 
@@ -108,6 +109,45 @@ namespace Portfolio.Data
                             .Where(x => x.user_id == userId)
                             .ToList();
                     return Task.FromResult(educations);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    throw;
+                }
+
+            }
+        }
+
+        // get user Role 
+        public Task<Admins> GetUserRole(string email, int skip, int take)
+        {
+
+            using (var db = new DbContextPortfolio())
+            {
+                try
+                {
+                    var usersDetails = db.Admins.Skip(skip).Take(take).ToList();
+                    if (usersDetails.Count > 0)
+                    {
+                        foreach (var user in usersDetails)
+                        {
+                            bool isHashFound = CryptPass.VerifyHash(email, user.email_hash);
+                            if (isHashFound)
+                            {
+                                return Task.FromResult(user);
+                            }
+                        }
+                        //recursive call until there is not data in db 
+                        return GetUserRole(email, skip + take, take + take);
+                    }
+                    else
+                    {
+                        throw new Exception("user not found");
+
+                    }
+
+
                 }
                 catch (Exception ex)
                 {
