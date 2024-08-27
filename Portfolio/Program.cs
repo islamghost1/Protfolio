@@ -7,8 +7,7 @@ using Portfolio.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Components.Authorization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +53,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<HttpClient>();
 builder.Services.AddRazorPages();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
 var app = builder.Build();
 app.Services.GetRequiredService<ConfigurationHelper>();
 
@@ -61,6 +62,8 @@ app.Services.GetRequiredService<ConfigurationHelper>();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -80,4 +83,5 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Portfolio.Client._Imports).Assembly);
 app.MapRazorPages();
+app.MapControllers();
 app.Run();

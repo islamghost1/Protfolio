@@ -1,99 +1,46 @@
 ﻿@page "/"
-@* @rendermode InteractiveAuto *@
 
-<PageTitle>Home</PageTitle>
-<a class="btn btn-danger" href="/Modify">edit</a>
-<div class="container ">
-    <div class="row">
-        <div class="col-md-6  d-flex flex-column align-items-center">
-            <img class="border-0 rounded-2 mb-3 shadow-lg  mb-4 bg-body rounded" style="height:300px;width:300px" src="/src/GreekFace.jpeg" alt="Profile picture">
-            <h1 class="text-center" style="font-weight:bolder">@Users?.name?.ToUpper() @Users?.last_name?.ToUpper()</h1>
-        </div>
-        <div class="col-md-6 mt-5">
-            <div class="p-3">
-                <p><i class="fa-solid fa-phone me-3"></i> @Users?.phone</p>
-                <hr>
-                <p><i class="fa-solid fa-envelope me-3"></i> @Users?.email</p>
-                <hr>
-                <p><i class="fa-solid fa-location-dot me-3"></i> @Users?.address</p>
-                <hr>
-                <section>
-                    <p>
-                        HTML is the standard markup language for creating Web pages. HTML describes the structure of a Web page, and consists of a series of elements. HTML elements tell the browser how to display the content.
-                    </p>
-                </section>
+
+<PageTitle>ISLAM SISSAOUI CV </PageTitle>
+@if (userDetails == null)
+{
+    <p>loading @Url</p>
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <p class="text-danger">@error</p>
+
+    }
+}
+else
+{
+    <div class="container ">
+        <!--Image & user name-->
+        <ImageNUserName Users="@userDetails.Users" />
+        <!--WORK EXPERIENCE-->
+        <div class="row mt-3">
+            <WorkExperience Experiences="@userDetails.Experiences" />
+            <!--SKILLS-->
+            <div class="col-md-6">
+                <UserSkills userSkills="@userDetails.userSkills" />
+                <!--EDUCATION-->
+                <UserEducation userEducation="@userDetails.userEducation" />
             </div>
-
         </div>
 
     </div>
-    <!--WORK EXPERIENCE-->
-    <div class="row mt-3">
-        <div class="col-md-6  d-flex flex-column ">
-            <h3 class="mb-3" style="font-size:20px; font-weight:bolder; ">WORK EXPERIENCE</h3>
-            <div>
-                @for (int i = 0; i < 6; i++)
-                {
-                    <h5 class="fw-bold">web developer (2048-2016)</h5>
-                    <h6 class="fw-bold">company</h6>
-                    <div class="d-flex mb-1">
-                        <div class="vr me-1"></div>
-                        <p>
-                            HTML is the standard markup language .
-                        </p>
-                    </div>
-                    <div class="d-flex">
-                        <div class="vr me-1"></div>
-                        <p>
-                            HTML is the standard markup language for creating Web pages. HTML describes the structure of a Web page
-                        </p>
-                    </div>
-                }
-            </div>
+    <div class="footer mt-1 pb-5 text-body-secondary">
+        <hr />
+        <div class="d-flex justify-content-center  ">
+            <div class="row justify-content-center  ">
+                <div class="d-flex justify-content-center">
+                    <a href="https://www.linkedin.com/in/islam-s-b54805178/" class="text-decoration-none text-body-emphasis"> <i class="devicon-linkedin-plain fs-3 me-2" />  </a>
+                    <a href="https://github.com/islamghost1" class="text-decoration-none text-body-emphasis"><i class="devicon-github-original fs-3"></i></a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <span class="fs-6">Made with  <i class="fa-solid fa-mug-hot"></i> by @@ISLAM.SCR </span>
 
-        </div>
-        <!--SKILLS-->
-        <div class="col-md-6">
-            <h3 class="mb-3" style="font-size:20px; font-weight:bolder">SKILLS</h3>
-            <div class="d-flex flex-wrap">
-                @for (int i = 0; i < 16; i++)
-                {
-                    <div class="w-25">
-                        <h5 class="fw-bold">C#</h5>
-                        <div id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value:79 ; --fg:#FE3E45 ;--size: 100px;"></div>
-
-                    </div>
-                }
-            </div>
-
-
-
-
-            <!--EDUCATION-->
-            <div class="col-12  mt-3">
-                <h3 class="mb-3" style="font-size:20px; font-weight:bolder">EDUCATION</h3>
-
-                @for (int i = 0; i < 1; i++)
-                {
-                    <h5 class="fw-bold">web developer (2048-2016)</h5>
-                    <h6 class="fw-bold">company</h6>
-                    <div class="d-flex mb-1">
-                        <div class="vr me-1"></div>
-                        <p>
-                            HTML is the standard markup language .
-                        </p>
-                    </div>
-                    <div class="d-flex">
-                        <div class="vr me-1"></div>
-                        <p>
-                            HTML is the standard markup language for creating Web pages. HTML describes the structure of a Web page
-                        </p>
-                    </div>
-                }
-
-
+                </div>
             </div>
         </div>
     </div>
-
-</div>
+}

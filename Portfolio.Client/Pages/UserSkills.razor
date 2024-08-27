@@ -1,0 +1,68 @@
+﻿<h3 class="mb-3" style="font-size:20px; font-weight:bolder">SKILLS</h3>
+<div class="">
+
+    <div id="carouselExample" class="carousel rounded-2 slide" data-bs-ride="carousel" data-bs-touch="true">
+        <div class="carousel-indicators">
+            @{
+                int indexBtn = 0;
+            }
+            @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+            {
+                if (indexBtn == 0)
+                {
+                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                }
+                else
+                {
+
+                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="@indexBtn" aria-label="Slide @(indexBtn+1)"></button>
+
+                }
+                indexBtn++;
+            }
+        </div>
+        <div class="carousel-inner pb-5">
+            @{
+                int indexCateg = 0;
+            }
+            @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+            {
+                string _category;
+                var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
+                <div class="carousel-item @(indexCateg>0?"":"active")" data-bs-interval="9000">
+                    <h4 class="text-secondary"><strong>@category</strong></h4>
+                    <div class="d-flex justify-content-center  flex-wrap">
+                        @foreach (var skill in categorySkills)
+                        {
+                            <div class=" text-center shadow-lg rounded-3 me-2 my-2 pt-2 " style="min-width:25%">
+                                @if (!skill.skill_desc.Contains("//"))
+                                {
+                                    <i class="@skill.skill_desc  fs-1"></i>
+                                }
+                                else
+                                {
+                                    <img src="@skill.skill_desc" style="max-height:70px;max-width:70px" />
+
+                                }
+                                <p class="fw-bold">@skill.skill_name </p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                indexCateg++;
+
+            }
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+</div>

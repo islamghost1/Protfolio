@@ -1,0 +1,37 @@
+﻿<div class="col-md-6  d-flex flex-column pb-2">
+    <h3 class="mb-3" style="font-size:20px; font-weight:bolder; ">WORK EXPERIENCE </h3> @foreach (var ex in Experiences)
+    {
+        <div class="mb-2 d-flex">
+            <div>
+                <div class="body-timeline">
+                    <ul class="timeline">
+                        <li class="timeline-event">
+                            <label class="timeline-event-icon"></label>
+                            <div class="timeline-event-copy">
+                                @foreach (var experience in @ex.experience)
+                                {
+                                    <!--CompanyName-->
+                                    <div class="fw-bold timeline-event-thumbnail" style="max-height:23px">
+                                        @((MarkupString)experience.company_name)
+                                    </div>
+                                    <!--Work Title-->
+                                    <h5 class="fw-bold"> @((MarkupString)experience.work_title) </h5>
+                                    <!--ExperienceDesc-->
+                                    <div class="mb-1">
+                                        <p class="text-justify">@((MarkupString)experience.project_details)</p>
+                                    </div>
+                                    <!--Steps--> @foreach (var step in experience.ProjectSteps)
+                                    {
+                                        <div class=" mb-1">
+                                            <p>@((MarkupString)step.step)</p>
+                                        </div>
+                                    }            
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
