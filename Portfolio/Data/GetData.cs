@@ -59,13 +59,23 @@ namespace Portfolio.Data
                                     project_id = s.project_id,
                                     user_id = s.user_id,
                                     step = s.step
-                                }).OrderBy(j=>j.id).ToList()
+                                }).OrderBy(j => j.id).ToList()
                             })
                             .ToList();
 
 
                     List<Experience> experiences = new List<Experience>();
-                    experiences.Add(new Experience { experience = Projects });
+                    foreach (var project in Projects)
+                    {
+                        experiences.Add(new Experience
+                        {
+                            experience = new List<Projects>
+                            {
+                                project
+                            }
+                        });
+                    }
+
                     return Task.FromResult(experiences);
                 }
                 catch (Exception ex)
