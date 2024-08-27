@@ -1,15 +1,26 @@
 ﻿@page "/"
-
+@attribute [StreamRendering(true)]
 
 <PageTitle>ISLAM SISSAOUI CV </PageTitle>
 @if (userDetails == null)
 {
-    <p>loading @Url</p>
-    @if (!string.IsNullOrEmpty(error))
-    {
-        <p class="text-danger">@error</p>
-
-    }
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-center " style="min-height:600px">
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <p class="text-danger">
+                    @error
+                </p>
+            }
+            else
+            {
+                <img  alt="Loading" src="/src/Splash screen.gif" />
+            }
+        </div>
+        
+    </div>
+    
+  
 }
 else
 {
