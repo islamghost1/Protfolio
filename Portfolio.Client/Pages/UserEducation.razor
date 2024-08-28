@@ -29,7 +29,7 @@
                 <div class="carousel-item @(indexEducation>0?"":"active")" data-bs-interval="9000">
                     <div class="d-flex justify-content-center  flex-wrap">
 
-                        <div class=" text-center shadow-lg rounded-3 me-2 px-2 my-2 py-2 px-5 mb-2" style="min-width:25%">
+                        <div class=" text-center bg-secondary shadow-lg rounded-3 me-2 px-2 my-2 py-2 px-5 mb-2" style="min-width:25%">
                             @if (!level.icon.Contains("//"))
                             {
                                 <i class="@level.icon  fs-1"></i>
@@ -41,7 +41,7 @@
                             }
                             <p class="fw-bold">@level.establishment </p>
                             <p class="fw-bold">@level?.start_date.Value.ToString("MM/yyyy") - @level?.end_date.Value.ToString("MM/yyyy") </p>
-                            <p class="fw-bold text-secondary">@level.Description </p>
+                            <p class="fw-bold text-light">@level.Description </p>
                         </div>
 
                     </div>
