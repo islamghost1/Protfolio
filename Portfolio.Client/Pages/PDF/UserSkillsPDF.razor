@@ -1,0 +1,36 @@
+﻿@using Portfolio.Client.Pages.PDF
+<h3 class="mb-3" style="font-size:20px; font-weight:bolder">SKILLS</h3>
+<div class="text-center">
+
+
+    @foreach (var category in Enum.GetValues(typeof(Client.Models.SkillCategory)))
+    {
+        string _category;
+        var categorySkills = userSkills?.Where(skill => skill.category == (int)category).ToList();
+
+        <h4 class="text-secondary"><strong>@category</strong></h4>
+        <div class="d-flex justify-content-center  flex-wrap">
+            @foreach (var skill in categorySkills)
+            {
+                <div class=" text-center bg-secondary shadow-lg rounded-3 me-2 mb-2 pt-2 " style="min-width:25%">
+                    @if (!skill.skill_desc.Contains("//"))
+                    {
+                        <i class="@skill.skill_desc  fs-1"></i>
+                    }
+                    else
+                    {
+                        <img src="@skill.skill_desc" style="max-height:70px;max-width:70px" />
+
+                    }
+                    <p class="fw-bold">@skill.skill_name </p>
+                </div>
+            }
+        </div>
+
+
+
+    }
+
+
+</div>
+

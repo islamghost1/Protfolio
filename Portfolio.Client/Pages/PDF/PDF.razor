@@ -1,5 +1,7 @@
-﻿@page "/"
+﻿@page "/PDF"
 @attribute [StreamRendering(true)]
+@using Portfolio.Client.Pages
+@using Portfolio.Client.Pages.PDF
 
 <PageTitle>ISLAM SISSAOUI CV </PageTitle>
 @if (userDetails == null)
@@ -32,9 +34,9 @@ else
             <WorkExperience Experiences="@userDetails.Experiences" />
             <!--SKILLS-->
             <div class="col-md-6">
-                <UserSkills userSkills="@userDetails.userSkills" />
+                <UserSkillsPDF userSkills="@userDetails.userSkills" />
                 <!--EDUCATION-->
-                <UserEducation userEducation="@userDetails.userEducation" />
+                <UserEducationPDF userEducation="@userDetails.userEducation" />
                 <!--LANGUAGES-->
                 <div>
                     <h4>LAGUAGES</h4>
@@ -64,5 +66,5 @@ else
        
 
     </div>
-    <Footer/>
+   <Footer/>
 }
